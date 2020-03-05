@@ -64,26 +64,16 @@ The application consists of 3 components:
 - A public facing frontend
 - A MongoDB database
 
-You'll first need to setup Helm, as we'll use it to deploy the MongoDB database.
+You'll first need to setup Helm 3, as we'll use it to deploy the MongoDB database.
 
-Apply the following manifest to setup RBAC for helm:
+**Using Helm 3**
 
-```bash
-kubectl apply -f ignite-day2-aks/manifest/helm-rbac.yaml
-```
-
-Now we will initialize Helm and it will be deployed to the cluster
+We'll now deploy are MongoDB database
 
 ```bash
-helm init --service-account tiller
-```
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-**wait approximately 20 seconds before running the next command**
-
-Now that we have Helm setup we'll now deploy are MongoDB database
-
-```bash
-helm install stable/mongodb --name orders-mongo --set mongodbUsername=orders-user,mongodbPassword=orders-password,mongodbDatabase=akschallenge
+helm install orders-mongo stable/mongodb --set mongodbUsername=orders-user,mongodbPassword=orders-password,mongodbDatabase=akschallenge
 ```
 
 We'll now create the secrets the application will use to connect to the MongoDB Database
